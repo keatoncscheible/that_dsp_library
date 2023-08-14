@@ -1,5 +1,5 @@
 
-#include "arithmetic/square.hpp"
+#include "arithmetic/square.h"
 
 #include <matplot/matplot.h>
 

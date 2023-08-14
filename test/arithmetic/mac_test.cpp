@@ -1,4 +1,4 @@
-#include "arithmetic/mac.hpp"
+#include "arithmetic/mac.h"
 
 #include <matplot/matplot.h>
 
