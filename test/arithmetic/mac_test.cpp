@@ -1,5 +1,7 @@
 #include "arithmetic/mac.hpp"
 
+#include <matplot/matplot.h>
+
 #include "gtest/gtest.h"
 
 struct MacTests : public ::testing::Test {

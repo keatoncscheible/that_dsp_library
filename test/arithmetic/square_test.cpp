@@ -1,6 +1,8 @@
 
 #include "arithmetic/square.hpp"
 
+#include <matplot/matplot.h>
+
 #include "gtest/gtest.h"
 
 struct SquareTests : public ::testing::Test {
@@ -23,4 +25,10 @@ TEST_F(SquareTests, square) {
     int x = get_x();
     int expected_square = x * x;
     EXPECT_EQ(expected_square, square(x));
+
+    std::set<std::vector<double>> Y = {
+        {16, 5, 9, 4}, {2, 11, 7, 14}, {3, 10, 6, 15}, {13, 8, 12, 1}};
+    matplot::plot(Y);
+
+    matplot::show();
 }
