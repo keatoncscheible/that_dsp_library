@@ -47,7 +47,14 @@ foreach(LIBRARY_MODULE ${LIBRARY_MODULES})
 endforeach()
 
 message(STATUS "SOURCES: ${SOURCES}")
+foreach(SOURCE ${SOURCES})
+    message(STATUS "    ${SOURCE}")
+endforeach()
+
 message(STATUS "HEADERS: ${HEADERS}")
+foreach(HEADER ${HEADERS})
+    message(STATUS "    ${HEADER}")
+endforeach()
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCES})
 target_include_directories(${LIBRARY_NAME} PUBLIC ${INCLUDE_DIR})
