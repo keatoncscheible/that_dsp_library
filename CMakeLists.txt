@@ -4,6 +4,7 @@ set(LIBRARY_NAME "that_dsp_lib")
 set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
+set(EXAMPLES_DIR "${CMAKE_SOURCE_DIR}/examples")
 set(LIBRARY_MODULES 
     "arithmetic/mac"
     "arithmetic/square"
@@ -53,3 +54,4 @@ target_include_directories(${LIBRARY_NAME} PUBLIC ${INCLUDE_DIR})
 target_link_libraries(${LIBRARY_NAME} PUBLIC matplot)
 
 add_subdirectory(${TEST_DIR})
+add_subdirectory(${EXAMPLES_DIR})
