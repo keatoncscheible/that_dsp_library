@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 3.25.0)
 # GTest #
 #########
 add_subdirectory(lib/googletest)
-add_subdirectory(lib/matplotplusplus)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 foreach(LIBRARY_MODULE ${LIBRARY_MODULES})
@@ -15,7 +14,6 @@ foreach(LIBRARY_MODULE ${LIBRARY_MODULES})
     # Link the test executable with GTest and your main library
     target_link_libraries(${TEST_NAME} PUBLIC
         gtest_main
-        matplot
         that_dsp_lib
     )
 

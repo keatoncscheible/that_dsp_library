@@ -2,7 +2,7 @@
 	path = test/lib/googletest
 	url = https://github.com/google/googletest.git
 	branch = main
-[submodule "test/lib/matplotplusplus"]
-	path = test/lib/matplotplusplus
+[submodule "lib/matplotplusplus"]
+	path = lib/matplotplusplus
 	url = https://github.com/alandefreitas/matplotplusplus.git
 	branch = master
