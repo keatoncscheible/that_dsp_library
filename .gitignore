@@ -46,3 +46,5 @@ _deps
 
 # Project
 build
+lib/matplotplusplus
+test/lib/googletest
