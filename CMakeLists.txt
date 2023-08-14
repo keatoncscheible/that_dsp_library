@@ -6,6 +6,7 @@ set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 set(EXAMPLES_DIR "${CMAKE_SOURCE_DIR}/examples")
 set(LIBRARY_MODULES 
+    "signal"
     "arithmetic/mac"
     "arithmetic/square"
 )

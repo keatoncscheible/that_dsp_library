@@ -1,21 +1,18 @@
-cmake_minimum_required(VERSION 3.25.0)
 
-#########
-# GTest #
-#########
+
 add_subdirectory(lib/googletest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 foreach(LIBRARY_MODULE ${LIBRARY_MODULES})
 
-    # No need to generate a test if there is no source file for the module
-    set(LIBRARY_MODULE_SOURCE "${SOURCE_DIR}/${LIBRARY_MODULE}.cpp")
-    if (NOT EXISTS ${LIBRARY_MODULE_SOURCE})
-        continue()
-    endif()
+    # # No need to generate a test if there is no source file for the module
+    # set(LIBRARY_MODULE_SOURCE "${SOURCE_DIR}/${LIBRARY_MODULE}.cpp")
+    # if (NOT EXISTS ${LIBRARY_MODULE_SOURCE})
+    #     continue()
+    # endif()
 
     set(LIBRARY_MODULE_TEST "${TEST_DIR}/${LIBRARY_MODULE}_test.cpp")
-    string(REPLACE "/" "-" TEST_EXE_NAME ${LIBRARY_MODULE})
+    string(REPLACE "/" "-" TEST_EXE_NAME "${LIBRARY_MODULE}_test")
         
     if (EXISTS ${LIBRARY_MODULE_TEST})
        # Create a test executable for each test
