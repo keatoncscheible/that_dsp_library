@@ -27,14 +27,33 @@ class SignalTest : public ::testing::Test {
    public:
     using SignalType = Signal<T, SIGNAL_SIZE>;  // Adjust the size as needed
 
-    SignalType signal_1{8.0};
-    SignalType signal_2{2.0};
-    SignalType zero_signal{0.0};
+    SignalTest() {
+        // Set the default divide by zero mode before creating the test signals
+        Signal<T, SIGNAL_SIZE>::default_divide_by_zero_mode =
+            DivideByZeroMode::MAX;
+    }
 
-    SignalType expected_add_result{10.0};
-    SignalType expected_subtract_result{6.0};
-    SignalType expected_multiply_result{16.0};
-    SignalType expected_divide_result{4.0};
+    SignalType signal_1{T(8.0)};
+    SignalType signal_2{T(2.0)};
+    SignalType zero_signal{T(0.0)};
+
+    SignalType expected_add_result{T(10.0)};
+    SignalType expected_subtract_result{T(6.0)};
+    SignalType expected_multiply_result{T(16.0)};
+    SignalType expected_divide_result{T(4.0)};
+    SignalType expected_divide_by_zero_mode_max_result{
+        std::numeric_limits<T>::max()};
+    SignalType expected_divide_by_zero_mode_zero_result{T(0.0)};
+
+    static void set_divide_by_zero_mode_max() {
+        Signal<T, SIGNAL_SIZE>::default_divide_by_zero_mode =
+            DivideByZeroMode::MAX;
+    }
+
+    static void set_divide_by_zero_mode_zero() {
+        Signal<T, SIGNAL_SIZE>::default_divide_by_zero_mode =
+            DivideByZeroMode::ZERO;
+    }
 };
 
 using SignalTypes = ::testing::Types<double, float, int>;
@@ -58,4 +77,26 @@ TYPED_TEST(SignalTest, Multiply) {
 TYPED_TEST(SignalTest, Divide) {
     typename TestFixture::SignalType result = this->signal_1 / this->signal_2;
     ASSERT_TRUE(signals_equal(result, this->expected_divide_result));
+}
+
+TYPED_TEST(SignalTest, DivideByZeroModeMax) {
+    using T = typename TestFixture::SignalType;
+    using SignalType = typename TestFixture::SignalType;
+    this->set_divide_by_zero_mode_max();
+    SignalType signal_1{T(8.0)};
+    SignalType zero_signal{T(0.0)};
+    SignalType result = signal_1 / zero_signal;
+    ASSERT_TRUE(
+        signals_equal(result, this->expected_divide_by_zero_mode_max_result));
+}
+
+TYPED_TEST(SignalTest, DivideByZeroModeZero) {
+    using T = typename TestFixture::SignalType;
+    using SignalType = typename TestFixture::SignalType;
+    this->set_divide_by_zero_mode_zero();
+    SignalType signal_1{T(8.0)};
+    SignalType zero_signal{T(0.0)};
+    SignalType result = signal_1 / zero_signal;
+    ASSERT_TRUE(
+        signals_equal(result, this->expected_divide_by_zero_mode_zero_result));
 }

@@ -1,30 +1,26 @@
+#ifndef SIGNAL_H
+#define SIGNAL_H
+
 #include <algorithm>  // For std::transform
 #include <array>
 #include <iostream>
 
 enum class DivideByZeroMode {
-    MAX,   // Set result to the maximum value the type
+    MAX,   // Set result to the maximum value of the type
     ZERO,  // Set result to 0
 };
 
 template <typename T, size_t Size>
 class Signal {
    public:
-    // Zero fill and set divide by zero mode to MAX
-    Signal() : samples_{}, divide_by_zero_mode_(DivideByZeroMode::MAX) {}
+    static DivideByZeroMode default_divide_by_zero_mode;
 
-    // Fill with value and set divide by zero mode to MAX
+    // Zero fill
+    Signal() : samples_{}, divide_by_zero_mode_(default_divide_by_zero_mode) {}
+
+    // Fill with value
     explicit Signal(const T& value)
-        : divide_by_zero_mode_(DivideByZeroMode::MAX) {
-        samples_.fill(value);
-    }
-
-    // Zero fill and set divide by zero mode accordingly
-    explicit Signal(DivideByZeroMode mode)
-        : samples_{}, divide_by_zero_mode_(mode) {}
-
-    // Fill with value and set divide by zero mode accordingly
-    Signal(const T& value, DivideByZeroMode mode) : divide_by_zero_mode_(mode) {
+        : samples_{}, divide_by_zero_mode_(default_divide_by_zero_mode) {
         samples_.fill(value);
     }
 
@@ -62,11 +58,9 @@ class Signal {
     Signal<T, Size> operator/(const Signal<T, Size>& other) const {
         Signal<T, Size> result;
         for (size_t i = 0; i < Size; ++i) {
-            // Protect against divide by zero
             if (other[i] != T{}) {
                 result[i] = samples_[i] / other[i];
             } else {
-                result[i] = T{};
                 switch (this->divide_by_zero_mode_) {
                     case DivideByZeroMode::MAX:
                         result[i] = std::numeric_limits<T>::max();
@@ -80,15 +74,20 @@ class Signal {
         return result;
     }
 
-    // Print the Signal's elements using std::transform
     void print() const {
-        std::transform(samples_.begin(), samples_.end(),
-                       std::ostream_iterator<T>(std::cout, " "),
-                       [](const T& value) { return value; });
-        std::cout << std::endl;
+        std::cout << "[ ";
+        std::copy(samples_.begin(), samples_.end(),
+                  std::ostream_iterator<T>(std::cout, " "));
+        std::cout << "]" << std::endl;
     }
 
    private:
     std::array<T, Size> samples_;
-    DivideByZeroMode divide_by_zero_mode_;
+    DivideByZeroMode divide_by_zero_mode_ = default_divide_by_zero_mode;
 };
+
+template <typename T, size_t Size>
+DivideByZeroMode Signal<T, Size>::default_divide_by_zero_mode =
+    DivideByZeroMode::MAX;
+
+#endif  // SIGNAL_H
