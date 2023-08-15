@@ -7,6 +7,7 @@ set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 set(EXAMPLES_DIR "${CMAKE_SOURCE_DIR}/examples")
 set(LIBRARY_MODULES 
     "signal"
+    "control_signal"
     "arithmetic/mac"
     "arithmetic/square"
 )
