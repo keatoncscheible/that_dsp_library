@@ -8,8 +8,6 @@ set(EXAMPLES_DIR "${CMAKE_SOURCE_DIR}/examples")
 set(LIBRARY_MODULES 
     "signal"
     "control_signal"
-    "arithmetic/mac"
-    "arithmetic/square"
 )
 
 project(
