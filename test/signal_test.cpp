@@ -4,6 +4,11 @@
 
 #define SIGNAL_SIZE 5
 
+// TODOs
+// * Test complex numbers
+// * Use signals_equal tolerance to test large/small floating point number math
+// * Potentially separate float, int and complex into separate test cases
+
 // Function to check if all values in a Signal are equal
 template <typename T, size_t Size>
 bool signals_equal(const Signal<T, Size>& signal_1,
